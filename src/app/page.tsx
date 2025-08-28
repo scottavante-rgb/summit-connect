@@ -68,7 +68,6 @@ export default function Page() {
               <Input name="org" placeholder="Organisation" required />
               <Input name="region" placeholder="AU / UK / EU / US / Other" required />
               <input name="persona" defaultValue="enterprise" hidden />
-              {/* honeypot for bots */}
               <input name="honeypot" className="hidden" tabIndex={-1} autoComplete="off" />
               <div className="md:col-span-2 flex justify-end">
                 <Button type="submit" disabled={loading} className="bg-emerald-400/20 text-emerald-300 border border-emerald-300/30">
@@ -86,7 +85,6 @@ export default function Page() {
         <h3 className="text-xl font-medium">Prefer a real conversation?</h3>
         <p className="text-zinc-400 mt-1">Book 20 minutes with our team. Bring your questions — we’ll bring your roadmap.</p>
         <div className="mt-6 h-[620px] rounded-2xl overflow-hidden border border-zinc-800">
-          {/* Replace this with your real scheduler link */}
           <iframe
             src="https://calendly.com/your-summit-slot/20min?hide_gdpr_banner=1"
             className="w-full h-full"
