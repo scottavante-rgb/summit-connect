@@ -142,35 +142,13 @@ export default function Page() {
         </Card>
       </section>
 
-      {/* Fun Form */}
+      {/* Fun Form (Together.ai) */}
       <section id="fun" className="max-w-6xl mx-auto px-6 pb-20">
         <h3 className="text-xl md:text-2xl font-medium">Just for fun</h3>
         <p className="text-zinc-400 mt-1">Two questions to spark thought — answer them if you like.</p>
         <Card className="mt-4 bg-zinc-950/60 border-zinc-800">
           <CardContent className="p-6 md:p-8">
-            <form className="grid grid-cols-1 gap-4 md:gap-6">
-              <div>
-                <label htmlFor="universeQuestion" className="text-sm text-zinc-300">
-                  If you could ask the universe one question, what would it be?
-                </label>
-                <Input id="universeQuestion" placeholder="Why are we here?" className="mt-2 bg-transparent text-white placeholder-zinc-500 border-zinc-700" />
-              </div>
-              <div>
-                <label htmlFor="ideaAwake" className="text-sm text-zinc-300">
-                  What idea keeps you awake at night?
-                </label>
-                <Input id="ideaAwake" placeholder="The Singularity? Free will? Quantum weirdness?" className="mt-2 bg-transparent text-white placeholder-zinc-500 border-zinc-700" />
-              </div>
-              <div className="flex justify-end">
-                <Button
-                  type="button"
-                  className="bg-emerald-400/20 text-emerald-300 border border-emerald-300/30"
-                  onClick={() => toast.info("Fun answers submitted!")}
-                >
-                  Submit for fun
-                </Button>
-              </div>
-            </form>
+            <FunForm />
           </CardContent>
         </Card>
       </section>
@@ -191,5 +169,85 @@ export default function Page() {
         </div>
       </footer>
     </main>
+  );
+}
+
+/** ----- FunForm component (calls /api/fun using Together.ai) ----- */
+function FunForm() {
+  const [universeQuestion, setUniverseQuestion] = useState("");
+  const [ideaAwake, setIdeaAwake] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [aiReply, setAiReply] = useState<string | null>(null);
+
+  async function onFunSubmit() {
+    setLoading(true);
+    setAiReply(null);
+    try {
+      const res = await fetch("/api/fun", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ universeQuestion, ideaAwake }),
+      });
+      const data = await res.json();
+      if (!data.ok) throw new Error(data.error || "Unknown error");
+      setAiReply(data.answer);
+    } catch (e: any) {
+      toast.error(e.message || "Couldn’t get an answer.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <div className="grid grid-cols-1 gap-6">
+      <div>
+        <label htmlFor="universeQuestion" className="text-sm text-zinc-300">
+          If you could ask the universe one question, what would it be?
+        </label>
+        <Input
+          id="universeQuestion"
+          value={universeQuestion}
+          onChange={(e) => setUniverseQuestion(e.target.value)}
+          placeholder="Why are we here?"
+          className="mt-2 bg-transparent text-white placeholder-zinc-500 border-zinc-700"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="ideaAwake" className="text-sm text-zinc-300">
+          What idea keeps you awake at night?
+        </label>
+        <Input
+          id="ideaAwake"
+          value={ideaAwake}
+          onChange={(e) => setIdeaAwake(e.target.value)}
+          placeholder="The Singularity? Free will? Quantum weirdness?"
+          className="mt-2 bg-transparent text-white placeholder-zinc-500 border-zinc-700"
+        />
+      </div>
+
+      <div className="flex justify-end">
+        <Button
+          type="button"
+          onClick={onFunSubmit}
+          disabled={loading || (!universeQuestion && !ideaAwake)}
+          className="bg-emerald-400/20 text-emerald-300 border border-emerald-300/30"
+        >
+          {loading ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Asking the cosmos…
+            </>
+          ) : (
+            "Ask the AI"
+          )}
+        </Button>
+      </div>
+
+      {aiReply && (
+        <div className="rounded-lg border border-emerald-400/30 bg-zinc-950/50 p-4 text-zinc-300 whitespace-pre-wrap">
+          {aiReply}
+        </div>
+      )}
+    </div>
   );
 }
