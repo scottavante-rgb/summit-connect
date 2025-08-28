@@ -258,7 +258,8 @@ export default function Page() {
         </p>
         <div className="mt-6 h-[620px] rounded-2xl overflow-hidden border border-zinc-800">
           <iframe
-            src="https://calendly.com/your-summit-slot/20min?hide_gdpr_banner=1"
+            // TODO: drop your real booking link here to avoid 404s
+            src="https://calendly.com/CALENDLY_LINK_HERE?hide_gdpr_banner=1"
             className="w-full h-full"
           />
         </div>
