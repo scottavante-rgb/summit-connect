@@ -177,7 +177,8 @@ export default function Page() {
 
       {/* Footer */}
       <footer className="relative">
-        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-emerald-400/40 to-transparent" />
+        {/* Softer, deeper mint line */}
+        <div className="absolute top-0 inset-x-0 h-6 bg-gradient-to-r from-transparent via-emerald-400/30 to-transparent blur-md" />
         <div className="max-w-6xl mx-auto px-6 py-7 flex items-center justify-between text-xs text-zinc-500">
           <div className="flex items-center gap-2">
             <Image src="/summit-glyph.png" alt="Summit Glyph" width={18} height={18} className="opacity-70" />
