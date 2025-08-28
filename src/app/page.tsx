@@ -8,13 +8,37 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Loader2, ArrowRight, Calendar } from "lucide-react";
 
+type ContactFormData = {
+  name: string;
+  email: string;
+  org: string;
+  region: string;
+  persona: "enterprise" | "oem" | "media" | "careers" | "other";
+  message: string;
+  honeypot?: string;
+};
+
 export default function Page() {
   const [loading, setLoading] = useState(false);
+
+  function readForm(form: HTMLFormElement): ContactFormData {
+    const fd = new FormData(form);
+    return {
+      name: String(fd.get("name") ?? ""),
+      email: String(fd.get("email") ?? ""),
+      org: String(fd.get("org") ?? ""),
+      region: String(fd.get("region") ?? ""),
+      persona: (String(fd.get("persona") ?? "enterprise") as ContactFormData["persona"]),
+      message: String(fd.get("message") ?? ""),
+      honeypot: fd.get("honeypot") ? String(fd.get("honeypot")) : undefined,
+    };
+  }
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget as HTMLFormElement;
-    const data = Object.fromEntries(new FormData(form)) as any;
+    const data = readForm(form);
+
     setLoading(true);
     const res = await fetch("/api/contact", {
       method: "POST",
@@ -68,6 +92,7 @@ export default function Page() {
               <Input name="org" placeholder="Organisation" required />
               <Input name="region" placeholder="AU / UK / EU / US / Other" required />
               <input name="persona" defaultValue="enterprise" hidden />
+              {/* honeypot for bots */}
               <input name="honeypot" className="hidden" tabIndex={-1} autoComplete="off" />
               <div className="md:col-span-2 flex justify-end">
                 <Button type="submit" disabled={loading} className="bg-emerald-400/20 text-emerald-300 border border-emerald-300/30">
