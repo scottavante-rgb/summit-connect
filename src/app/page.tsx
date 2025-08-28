@@ -82,7 +82,7 @@ export default function Page() {
             style={{ background: "radial-gradient(closest-side, rgba(16,185,129,0.18), transparent 65%)" }}
           />
         </div>
-        <div className="max-w-6xl mx-auto px-6 py-24 md:py-32">
+        <div className="max-w-6xl mx-auto px-6 py-20 md:py-28">
           <h1 className="text-5xl md:text-6xl font-semibold tracking-tight">
             Every Transformation Starts Here.
           </h1>
@@ -90,7 +90,7 @@ export default function Page() {
             A conversation, not a form. Tell us what slows you down — we’ll show you what it feels like
             when an hour is returned to every person, every day.
           </p>
-          <div className="mt-10 flex gap-4">
+          <div className="mt-8 flex gap-4">
             <a href="#connect">
               <Button size="lg" className="bg-emerald-400/20 text-emerald-300 border border-emerald-300/30">
                 Start Your Conversation <ArrowRight className="ml-2 h-4 w-4" />
@@ -106,11 +106,11 @@ export default function Page() {
       </section>
 
       {/* Contact Form */}
-      <section id="connect" className="max-w-6xl mx-auto px-6 pb-16">
+      <section id="connect" className="max-w-6xl mx-auto px-6 pb-10">
         <Card className="bg-zinc-950/60 border-zinc-800">
           <CardContent className="p-6 md:p-8">
             {!submitted ? (
-              <form onSubmit={onSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+              <form onSubmit={onSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
                 <div className="md:col-span-2">
                   <label htmlFor="message" className="text-sm text-zinc-300">
                     If Summit was beside you tomorrow, what would you hand over first?
@@ -143,23 +143,30 @@ export default function Page() {
       </section>
 
       {/* Fun Form */}
-      <section id="fun" className="max-w-6xl mx-auto px-6 pb-28">
+      <section id="fun" className="max-w-6xl mx-auto px-6 pb-20">
         <h3 className="text-xl md:text-2xl font-medium">Just for fun</h3>
-        <p className="text-zinc-400 mt-1">Answer a couple of fun questions — no strings attached.</p>
-        <Card className="mt-6 bg-zinc-950/60 border-zinc-800">
+        <p className="text-zinc-400 mt-1">Two questions to spark thought — answer them if you like.</p>
+        <Card className="mt-4 bg-zinc-950/60 border-zinc-800">
           <CardContent className="p-6 md:p-8">
-            <form className="grid grid-cols-1 gap-6">
+            <form className="grid grid-cols-1 gap-4 md:gap-6">
               <div>
-                <label htmlFor="icecream" className="text-sm text-zinc-300">Favourite ice cream flavour</label>
-                <Input id="icecream" placeholder="Mint choc chip?" className="mt-2 bg-transparent text-white placeholder-zinc-500 border-zinc-700" />
+                <label htmlFor="universeQuestion" className="text-sm text-zinc-300">
+                  If you could ask the universe one question, what would it be?
+                </label>
+                <Input id="universeQuestion" placeholder="Why are we here?" className="mt-2 bg-transparent text-white placeholder-zinc-500 border-zinc-700" />
               </div>
               <div>
-                <label htmlFor="holiday" className="text-sm text-zinc-300">Dream holiday destination</label>
-                <Input id="holiday" placeholder="Tuscany? Tokyo? Iceland?" className="mt-2 bg-transparent text-white placeholder-zinc-500 border-zinc-700" />
+                <label htmlFor="ideaAwake" className="text-sm text-zinc-300">
+                  What idea keeps you awake at night?
+                </label>
+                <Input id="ideaAwake" placeholder="The Singularity? Free will? Quantum weirdness?" className="mt-2 bg-transparent text-white placeholder-zinc-500 border-zinc-700" />
               </div>
               <div className="flex justify-end">
-                <Button type="button" className="bg-emerald-400/20 text-emerald-300 border border-emerald-300/30"
-                  onClick={() => toast.info("Fun answers submitted!")}>
+                <Button
+                  type="button"
+                  className="bg-emerald-400/20 text-emerald-300 border border-emerald-300/30"
+                  onClick={() => toast.info("Fun answers submitted!")}
+                >
                   Submit for fun
                 </Button>
               </div>
